@@ -1,0 +1,4 @@
+docker build -t chatgpt-ui-az .
+docker run -e OPENAI_API_KEY=asdasdasdasd -p 3000:3000 chatgpt-ui-az
+
+https://hub.docker.com/repository/docker/andersbo/chatgpt-ui-az/general
