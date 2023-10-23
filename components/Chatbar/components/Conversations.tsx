@@ -7,6 +7,7 @@ interface Props {
 }
 
 export const Conversations = ({ conversations }: Props) => {
+  console.log("convs",{conversations})
   return (
     <div className="flex w-full flex-col gap-1">
       {conversations

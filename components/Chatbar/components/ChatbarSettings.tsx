@@ -8,11 +8,9 @@ import HomeContext from '@/pages/api/home/home.context';
 import { SettingDialog } from '@/components/Settings/SettingDialog';
 
 import { Import } from '../../Settings/Import';
-import { Key } from '../../Settings/Key';
 import { SidebarButton } from '../../Sidebar/SidebarButton';
 import ChatbarContext from '../Chatbar.context';
 import { ClearConversations } from './ClearConversations';
-import { PluginKeys } from './PluginKeys';
 
 export const ChatbarSettings = () => {
   const { t } = useTranslation('sidebar');
@@ -44,7 +42,7 @@ export const ChatbarSettings = () => {
 
       <Import onImport={handleImportConversations} />
 
-      <SidebarButton
+      {/* <SidebarButton
         text={t('Export data')}
         icon={<IconFileExport size={18} />}
         onClick={() => handleExportData()}
@@ -54,13 +52,7 @@ export const ChatbarSettings = () => {
         text={t('Settings')}
         icon={<IconSettings size={18} />}
         onClick={() => setIsSettingDialog(true)}
-      />
-
-      {!serverSideApiKeyIsSet ? (
-        <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
-      ) : null}
-
-      {!serverSidePluginKeysSet ? <PluginKeys /> : null}
+      /> */}
 
       <SettingDialog
         open={isSettingDialogOpen}

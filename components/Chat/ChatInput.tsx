@@ -113,14 +113,6 @@ export const ChatInput = ({
     }, 1000);
   };
 
-  const isMobile = () => {
-    const userAgent =
-      typeof window.navigator === 'undefined' ? '' : navigator.userAgent;
-    const mobileRegex =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i;
-    return mobileRegex.test(userAgent);
-  };
-
   const handleInitModal = () => {
     const selectedPrompt = filteredPrompts[activePromptIndex];
     if (selectedPrompt) {
@@ -162,7 +154,7 @@ export const ChatInput = ({
       } else {
         setActivePromptIndex(0);
       }
-    } else if (e.key === 'Enter' && !isTyping && !isMobile() && !e.shiftKey) {
+    } else if (e.key === 'Enter' && !isTyping && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     } else if (e.key === '/' && e.metaKey) {
@@ -378,20 +370,6 @@ export const ChatInput = ({
             />
           )}
         </div>
-      </div>
-      <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
-        <a
-          href="https://github.com/mckaywrigley/chatbot-ui"
-          target="_blank"
-          rel="noreferrer"
-          className="underline"
-        >
-          ChatBot UI
-        </a>
-        .{' '}
-        {t(
-          "Chatbot UI is an advanced chatbot kit for OpenAI's chat models aiming to mimic ChatGPT's interface and functionality.",
-        )}
       </div>
     </div>
   );

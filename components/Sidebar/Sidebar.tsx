@@ -21,7 +21,7 @@ interface Props<T> {
   handleSearchTerm: (searchTerm: string) => void;
   toggleOpen: () => void;
   handleCreateItem: () => void;
-  handleCreateFolder: () => void;
+  handleCreateFolder?: () => void;
   handleDrop: (e: any) => void;
 }
 
@@ -37,8 +37,8 @@ const Sidebar = <T,>({
   handleSearchTerm,
   toggleOpen,
   handleCreateItem,
-  handleCreateFolder,
   handleDrop,
+  handleCreateFolder = undefined,
 }: Props<T>) => {
   const { t } = useTranslation('promptbar');
 
@@ -60,23 +60,40 @@ const Sidebar = <T,>({
         className={`fixed top-0 ${side}-0 z-40 flex h-full w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0`}
       >
         <div className="flex items-center">
-          <button
-            className="text-sidebar flex w-[190px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10"
-            onClick={() => {
-              handleCreateItem();
-              handleSearchTerm('');
-            }}
-          >
-            <IconPlus size={16} />
-            {addItemButtonTitle}
-          </button>
+          {handleCreateFolder != undefined ? 
+            <>
+              <button
+                className="text-sidebar flex w-[190px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10"
+                onClick={() => {
+                  handleCreateItem();
+                  handleSearchTerm('');
+                }}
+              >
+                <IconPlus size={16} />
+                {addItemButtonTitle}
+              </button>
 
-          <button
-            className="ml-2 flex flex-shrink-0 cursor-pointer items-center gap-3 rounded-md border border-white/20 p-3 text-sm text-white transition-colors duration-200 hover:bg-gray-500/10"
-            onClick={handleCreateFolder}
-          >
-            <IconFolderPlus size={16} />
-          </button>
+              <button
+                className="ml-2 flex flex-shrink-0 cursor-pointer items-center gap-3 rounded-md border border-white/20 p-3 text-sm text-white transition-colors duration-200 hover:bg-gray-500/10"
+                onClick={handleCreateFolder}
+              >
+                <IconFolderPlus size={16} />
+              </button>
+            </>
+            : 
+            <>
+              <button
+                className="text-sidebar flex w-[244px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10"
+                onClick={() => {
+                  handleCreateItem();
+                  handleSearchTerm('');
+                }}
+              >
+                <IconPlus size={16} />
+                {addItemButtonTitle}
+              </button>
+            </>
+          }
         </div>
         <Search
           placeholder={t('Search...') || ''}
