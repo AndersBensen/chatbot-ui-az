@@ -6,8 +6,8 @@ import { ChatBody, Message } from '@/types/chat';
 // @ts-expect-error
 import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
 
-import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
-import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
+// import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
+// import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
 
 export const config = {
   runtime: 'edge',
@@ -17,12 +17,12 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt, temperature } = (await req.json()) as ChatBody;
 
-    await init((imports) => WebAssembly.instantiate(wasm, imports));
-    const encoding = new Tiktoken(
-      tiktokenModel.bpe_ranks,
-      tiktokenModel.special_tokens,
-      tiktokenModel.pat_str,
-    );
+    // await init((imports) => WebAssembly.instantiate(wasm, imports));
+    // const encoding = new Tiktoken(
+    //   tiktokenModel.bpe_ranks,
+    //   tiktokenModel.special_tokens,
+    //   tiktokenModel.pat_str,
+    // );
 
     let promptToSend = prompt;
     if (!promptToSend) {
@@ -34,27 +34,27 @@ const handler = async (req: Request): Promise<Response> => {
       temperatureToUse = DEFAULT_TEMPERATURE;
     }
 
-    const prompt_tokens = encoding.encode(promptToSend);
+    // const prompt_tokens = encoding.encode(promptToSend);
 
-    let tokenCount = prompt_tokens.length;
+    // let tokenCount = prompt_tokens.length;
     let messagesToSend: Message[] = [];
 
     for (let i = messages.length - 1; i >= 0; i--) {
       const message = messages[i];
-      const tokens = encoding.encode(message.content);
+      // const tokens = encoding.encode(message.content);
 
-      if (tokenCount + tokens.length + 1000 > model.tokenLimit) {
-        break;
-      }
-      tokenCount += tokens.length;
+      // if (tokenCount + tokens.length + 1000 > model.tokenLimit) {
+      //   break;
+      // }
+      // tokenCount += tokens.length;
       messagesToSend = [message, ...messagesToSend];
     }
 
-    encoding.free();
+    // encoding.free();
 
     const stream = await OpenAIStream(model, promptToSend, temperatureToUse, key, messagesToSend);
 
-    return new Response(stream);
+    return new Response(stream[0]);
   } catch (error) {
     console.error(error);
     if (error instanceof OpenAIError) {

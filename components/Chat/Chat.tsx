@@ -362,12 +362,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
               Important: Chatbot UI is 100% unaffiliated with OpenAI.
             </div>
           </div>
-          <div className="text-center text-gray-500 dark:text-gray-400">
-            <div className="mb-2">
-              Chatbot UI allows you to plug in your API key to use this UI with
-              their API.
-            </div>
-          </div>
         </div>
       ) : modelError ? (
         <ErrorMessageDiv error={modelError} />
